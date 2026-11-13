@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário de Bordo de Projetos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <h1>Diário de Bordo</h1>
+        
+        <form id="logForm">
+            <textarea id="conteudo" placeholder="Descreva a atividade..." required></textarea>
+            <select id="impedimento">
+                <option value="nenhum">Sem impedimento</option>
+                <option value="atencao">Atenção (Parcial)</option>
+                <option value="bloqueado">Bloqueado</option>
+            </select>
+            <button type="submit">Registar</button>
+        </form>
+
+        <section id="timeline">
+            <!-- Os registos serão inseridos aqui via JavaScript puro -->
+        </section>
+    </main>
+
+    <!-- Rodapé obrigatório para rastreabilidade -->
+    <footer>F26-2A-F83C-DFFD-8FBD-7582</footer>
+    <script src="script.js"></script>
+</body>
+</html>
