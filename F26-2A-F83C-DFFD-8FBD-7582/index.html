@@ -3,30 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diário de Bordo de Projetos</title>
+    <title>Projeto #14 — Diário de Bordo de Projetos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-        <h1>Diário de Bordo</h1>
-        
-        <form id="logForm">
-            <textarea id="conteudo" placeholder="Descreva a atividade..." required></textarea>
-            <select id="impedimento">
-                <option value="nenhum">Sem impedimento</option>
-                <option value="atencao">Atenção (Parcial)</option>
-                <option value="bloqueado">Bloqueado</option>
-            </select>
-            <button type="submit">Registar</button>
-        </form>
+    <header class="header">
+        <div class="header-content">
+            <div class="brand">
+                <h1>Diário de Bordo de Projetos</h1>
+                <span class="subtitle">Projeto #14 · Registro Cronológico</span>
+            </div>
+            <div id="auth-area" class="auth-area">
+                <!-- Preenchido dinamicamente pelo script.js -->
+            </div>
+        </div>
+    </header>
 
-        <section id="timeline">
-            <!-- Os registos serão inseridos aqui via JavaScript puro -->
+    <main class="main">
+        <div id="auth-feedback" class="feedback hidden" role="alert" aria-live="polite"></div>
+
+        <section id="form-section" class="form-section hidden">
+            <h2>Registar Atividade do Dia</h2>
+            <form id="log-form" class="log-form">
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="conteudo">Atividade do dia</label>
+                        <span id="char-count" class="char-count">0 / 2000</span>
+                    </div>
+                    <textarea
+                        id="conteudo"
+                        name="conteudo"
+                        maxlength="2000"
+                        required
+                        placeholder="Descreva o avanço técnico realizado hoje..."
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="impedimento">Impedimento técnico</label>
+                    <select id="impedimento" name="impedimento" required>
+                        <option value="sem">Sem impedimento</option>
+                        <option value="atencao">Atenção</option>
+                        <option value="bloqueado">Bloqueado</option>
+                    </select>
+                </div>
+                <div id="form-feedback" class="feedback hidden" role="status" aria-live="polite"></div>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Registar</button>
+            </form>
+        </section>
+
+        <section id="filters-section" class="filters-section hidden">
+            <h2>Filtros de Busca</h2>
+            <form id="filters-form" class="filters-form">
+                <div class="filter-group">
+                    <label for="busca">Pesquisa por palavra-chave</label>
+                    <input type="text" id="busca" name="busca" placeholder="Buscar no conteúdo...">
+                </div>
+                <div class="filter-group filter-group-sm">
+                    <label for="filtro-impedimento">Impedimento</label>
+                    <select id="filtro-impedimento" name="impedimento">
+                        <option value="">Todos</option>
+                        <option value="sem">Sem impedimento</option>
+                        <option value="atencao">Atenção</option>
+                        <option value="bloqueado">Bloqueado</option>
+                    </select>
+                </div>
+                <div class="filter-group filter-group-sm">
+                    <label for="inicio">Data inicial</label>
+                    <input type="date" id="inicio" name="inicio">
+                </div>
+                <div class="filter-group filter-group-sm">
+                    <label for="fim">Data final</label>
+                    <input type="date" id="fim" name="fim">
+                </div>
+                <div class="filter-actions">
+                    <button type="submit" class="btn btn-secondary">Filtrar</button>
+                    <button type="button" class="btn btn-secondary" id="clear-filters">Limpar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="timeline" class="timeline" aria-label="Linha do tempo de atividades">
+            <!-- Cartões renderizados dinamicamente -->
         </section>
     </main>
 
-    <!-- Rodapé obrigatório para rastreabilidade -->
-    <footer>F26-2A-F83C-DFFD-8FBD-7582</footer>
+    <footer>
+        Projeto #14: Diário de Bordo de Projetos · Chave Única: <code>F26-2A-F83C-DFFD-8FBD-7582</code> · Licença MIT
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

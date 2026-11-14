@@ -1,0 +1,8 @@
+name = "diario-bordo-f26"
+pages_build_output_dir = "."
+compatibility_date = "2024-09-23"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "diario-bordo-db"
+database_id = "413539f3-ddb6-4743-8653-1e85e58b23f6"
