@@ -39,9 +39,9 @@
 - **Harness:** *"É proibido usar React, Tailwind, Bootstrap ou qualquer framework CSS/JS. Usa apenas HTML5, CSS3 (Custom Properties, Flexbox, animações com `prefers-reduced-motion`) e manipulação direta do DOM com `createElement`/`textContent` e `fetch`."*
 - **Skill utilizada:** [`skills/vanilla-frontend/SKILL.md`](./skills/vanilla-frontend/SKILL.md)
 - **Entregáveis:**
-  - `index.html` — estrutura semântica, formulário acessível com contador de caracteres, filtros e `<footer>` com a Chave Única.
-  - `style.css` — design system com variáveis CSS, timeline vertical alinhada, badges de impedimento e responsividade.
-  - `script.js` — estado centralizado, módulo `api`, `checkAuth`/`renderAuthArea`/logout, `loadLogs` (com query params), `renderTimeline` e feedback inline (sem `alert`).
+  - `public/index.html` — estrutura semântica, formulário acessível com contador de caracteres, filtros e `<footer>` com a Chave Única.
+  - `public/style.css` — design system com variáveis CSS, timeline vertical alinhada, badges de impedimento e responsividade.
+  - `public/script.js` — estado centralizado, módulo `api`, `checkAuth`/`renderAuthArea`/logout, `loadLogs` (com query params), `renderTimeline` e feedback inline (sem `alert`).
 
 ### Agente 3: Validation Auditor (`auditoria-qa`) — Obrigatório
 

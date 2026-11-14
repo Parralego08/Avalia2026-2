@@ -12,7 +12,7 @@ O projeto foi construído sem frameworks de UI: **HTML5, CSS3 e JavaScript puro*
 
 - **Chave Única:** `F26-2A-F83C-DFFD-8FBD-7582`
 - **URL_CLOUDFLARE:** `https://diario-bordo-f26.pages.dev` *(substitua pela URL real gerada pela Cloudflare caso o nome do projeto Pages seja diferente)*
-- A chave também está visível no rodapé da aplicação (`<footer>` em `index.html`).
+- A chave também está visível no rodapé da aplicação (`<footer>` em `public/index.html`).
 
 > **Observação sobre o prefixo da chave:** a chave oficial emitida para este projeto inicia com `F26-`. O script `validar-local.mjs` do repositório atualmente aceita os prefixos `P26`/`T26`; caso ele recuse o prefixo `F26` ao rodar a validação local, reporte ao professor antes de abrir o Pull Request. Nenhum arquivo fora desta subpasta foi alterado.
 
@@ -55,9 +55,10 @@ O projeto foi construído sem frameworks de UI: **HTML5, CSS3 e JavaScript puro*
 
 ```
 F26-2A-F83C-DFFD-8FBD-7582/
-├── index.html              # HTML semântico + footer com a Chave Única
-├── style.css               # CSS moderno (variáveis, timeline, responsividade)
-├── script.js               # Vanilla JS (IIFE, fetch, DOM direto)
+├── public/
+│   ├── index.html          # HTML semântico + footer com a Chave Única
+│   ├── style.css           # CSS moderno (variáveis, timeline, responsividade)
+│   └── script.js           # Vanilla JS (IIFE, fetch, DOM direto)
 ├── schema.sql              # Schema D1 + índice
 ├── wrangler.toml           # Config Cloudflare Pages + binding D1
 ├── lib/
@@ -208,7 +209,7 @@ wrangler pages dev
 2. Configure:
    - **Root directory:** `F26-2A-F83C-DFFD-8FBD-7582`
    - **Build command:** *(em branco — HTML/CSS/JS puro)*
-   - **Build output directory:** `.`
+   - **Build output directory:** `public`
 3. Crie o banco D1 e aplique o schema remoto:
    ```bash
    cd F26-2A-F83C-DFFD-8FBD-7582
@@ -242,14 +243,14 @@ wrangler pages dev
 |-----------|--------|-----------|
 | **1. Deploy Online no Cloudflare** | ⏳ | URL em `URL_CLOUDFLARE` (validar após o deploy) |
 | **2. Serverless (Functions + D1 + Discord OAuth2)** | ✅ | `functions/api/*`, `wrangler.toml` (binding `DB`), `schema.sql`, `lib/session.js` |
-| **3. Frontend HTML5/CSS3/JS Vanilla** | ✅ | `index.html`, `style.css`, `script.js` sem frameworks |
+| **3. Frontend HTML5/CSS3/JS Vanilla** | ✅ | `public/index.html`, `public/style.css`, `public/script.js` sem frameworks |
 | **4. Engenharia de Agentes (3 + Teste + Harness + Skills)** | ✅ | `AGENTS.md` + `skills/*/SKILL.md` (3 skills) + `tests/api.test.mjs` |
 | **5. Repositório, Licença MIT e Auditoria** | ✅ | `LICENSE`, Chave Única no `README.md` e no `<footer>` |
 | **Sem framework UI** | ✅ | Apenas HTML/CSS/JS puro; nenhuma dependência de UI |
 | **Login exclusivo Discord OAuth2** | ✅ | `functions/api/auth/login.js`, `callback.js` e `me.js` |
 | **`new Date().toISOString()` só no servidor (UTC)** | ✅ | `functions/api/logs.js` — frontend apenas formata datas |
-| **Footer com a chave `F26-2A-F83C-DFFD-8FBD-7582`** | ✅ | `index.html` |
-| **Campos `user_id`, `username`, `avatar`, `conteudo`, `impedimento`, `criado_em`** | ✅ | API, schema e `script.js` alinhados |
+| **Footer com a chave `F26-2A-F83C-DFFD-8FBD-7582`** | ✅ | `public/index.html` |
+| **Campos `user_id`, `username`, `avatar`, `conteudo`, `impedimento`, `criado_em`** | ✅ | API, schema e `public/script.js` alinhados |
 
 ---
 
