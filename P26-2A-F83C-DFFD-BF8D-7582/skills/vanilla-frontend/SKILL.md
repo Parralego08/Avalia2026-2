@@ -1,4 +1,4 @@
----
+﻿---
 name: vanilla-frontend
 description: Interface web em HTML5, CSS3 e JavaScript puro para o Projeto #14. Use ao alterar public/index.html, style.css ou script.js, timeline, formulários, filtros, estados de sessão, acessibilidade e responsividade sem frameworks.
 ---
@@ -23,7 +23,7 @@ description: Interface web em HTML5, CSS3 e JavaScript puro para o Projeto #14. 
 4. **`fetch` com `credentials: 'include'`.** Toda chamada à API usa caminho relativo (`/api/...`).
 5. **Sessão manda na UI.** Formulário e filtros só aparecem com usuário autenticado; logout usa `/api/auth/me?logout=1` sem sair da página.
 6. **Feedback inline.** Proibido `alert`, `confirm` ou `prompt`. Usar as regiões `#auth-feedback` e `#form-feedback` com `role="alert"`/`aria-live`.
-7. **Chave no rodapé.** `<footer>` deve conter `F26-2A-F83C-DFFD-8FBD-7582` de forma visível.
+7. **Chave no rodapé.** `<footer>` deve conter `P26-2A-F83C-DFFD-BF8D-7582` de forma visível.
 8. **Não quebrar o contrato de seletores.** O `script.js` depende dos IDs e classes listados abaixo; renomear exige atualizar os dois lados.
 
 ## Contrato de seletores (não renomear sem atualizar o JS)
@@ -111,7 +111,7 @@ A timeline recebe `.timeline-empty` quando não há cards; o CSS remove o eixo v
 - [ ] Teclado: Tab alcança tudo, foco visível, Enter envia formulários.
 - [ ] `prefers-reduced-motion` respeitado.
 - [ ] `<footer>` contém a Chave Única.
-- [ ] Nenhuma alteração fora de `F26-2A-F83C-DFFD-8FBD-7582/`.
+- [ ] Nenhuma alteração fora de `P26-2A-F83C-DFFD-BF8D-7582/`.
 
 ## Anti-patterns
 
@@ -123,3 +123,4 @@ A timeline recebe `.timeline-empty` quando não há cards; o CSS remove o eixo v
 - ❌ Recarregar a página após registrar (usar `loadLogs()`).
 - ❌ Esconder o formulário via CSS sem alternar `.hidden` no JS.
 - ❌ Datas formatadas a partir de campo editável (usar `criado_em` do servidor).
+

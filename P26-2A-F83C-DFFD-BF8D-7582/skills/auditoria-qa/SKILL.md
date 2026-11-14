@@ -1,4 +1,4 @@
----
+﻿---
 name: auditoria-qa
 description: Protocolo do Agente de Teste e Validação do Projeto #14. Use para auditar segurança de sessão, contratos JSON, integridade no D1, testes automatizados, validação estrutural da rubrica e QA visual antes de deploy ou Pull Request.
 ---
@@ -84,7 +84,7 @@ Se um teste falhar: reproduzir, corrigir a causa raiz e rodar de novo. Nunca aju
 ## 5. Conformidade estrutural (rubrica)
 
 ```bash
-node validar-local.mjs F26-2A-F83C-DFFD-8FBD-7582
+node validar-local.mjs P26-2A-F83C-DFFD-BF8D-7582
 ```
 
 Esperado: **9/9 checks**, incluindo deploy online.
@@ -92,19 +92,19 @@ Esperado: **9/9 checks**, incluindo deploy online.
 | Item | Verificação |
 |------|-------------|
 | LICENSE | MIT presente |
-| README | contém `F26-2A-F83C-DFFD-8FBD-7582` e URL `*.pages.dev` |
+| README | contém `P26-2A-F83C-DFFD-BF8D-7582` e URL `*.pages.dev` |
 | AGENTS | `AGENTS.md` com ≥3 agentes, incluindo teste/validação |
 | Skills | `skills/*/SKILL.md` (atualmente 4) |
 | Frontend | HTML presente, sem frameworks proibidos |
 | Backend | `functions/` + D1 (`schema.sql`/`migrations/`) + Discord OAuth2 |
 | Rodapé | `<footer>` contém a Chave Única |
 | Deploy | home online com a chave no HTML |
-| Isolamento | só arquivos dentro de `F26-2A-F83C-DFFD-8FBD-7582/` |
+| Isolamento | só arquivos dentro de `P26-2A-F83C-DFFD-BF8D-7582/` |
 
 Comando auxiliar para inspecionar todos os checks:
 
 ```bash
-node --input-type=module -e "process.argv[1]='runner.mjs'; const { inspecionarSubpasta } = await import('./validar-local.mjs'); const { checks } = await inspecionarSubpasta('F26-2A-F83C-DFFD-8FBD-7582','F26-2A-F83C-DFFD-8FBD-7582',{checkLiveUrl:true}); console.log(JSON.stringify(checks,null,2));"
+node --input-type=module -e "process.argv[1]='runner.mjs'; const { inspecionarSubpasta } = await import('./validar-local.mjs'); const { checks } = await inspecionarSubpasta('P26-2A-F83C-DFFD-BF8D-7582','P26-2A-F83C-DFFD-BF8D-7582',{checkLiveUrl:true}); console.log(JSON.stringify(checks,null,2));"
 ```
 
 ## 6. QA manual — fluxo OAuth2 ponta a ponta
@@ -140,7 +140,7 @@ Registrar no PR ou no `AGENTS.md`:
 Comando: node --test tests/api.test.mjs
 Resultado: 6/6 pass, 0 fail
 
-Comando: node validar-local.mjs F26-2A-F83C-DFFD-8FBD-7582
+Comando: node validar-local.mjs P26-2A-F83C-DFFD-BF8D-7582
 Resultado: 9/9 checks
 
 Deploy: https://avalia2026-2-a7z.pages.dev
@@ -169,3 +169,4 @@ Tabela de auditoria:
 - ❌ Validar só no frontend.
 - ❌ Abrir PR com alterações fora da pasta da chave.
 - ❌ Considerar a chave `F26` validada pela API oficial (formato aceito: `P26`/`T26`); registrar a pendência, não maquiar.
+

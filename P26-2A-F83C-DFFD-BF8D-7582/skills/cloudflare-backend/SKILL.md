@@ -1,4 +1,4 @@
----
+﻿---
 name: cloudflare-backend
 description: Engenharia de backend para Cloudflare Pages Functions + D1 + Discord OAuth2 no Projeto #14. Use ao criar ou revisar rotas em functions/api, schema/migrations D1, sessão HMAC, OAuth2, validação de payload, filtros e contratos JSON.
 ---
@@ -6,7 +6,7 @@ description: Engenharia de backend para Cloudflare Pages Functions + D1 + Discor
 # Skill: Backend Serverless — Cloudflare Pages Functions + D1 + Discord OAuth2
 
 **Projeto:** #14 — Diário de Bordo de Projetos
-**Pasta:** `F26-2A-F83C-DFFD-8FBD-7582/`
+**Pasta:** `P26-2A-F83C-DFFD-BF8D-7582/`
 
 ## Quando ativar
 
@@ -185,5 +185,6 @@ wrangler.cmd pages deploy public --project-name avalia2026-2 --branch main
 
 1. Contratos acima respeitados à risca.
 2. Testes `node --test tests/api.test.mjs` verdes.
-3. Nenhuma alteração fora de `F26-2A-F83C-DFFD-8FBD-7582/`.
+3. Nenhuma alteração fora de `P26-2A-F83C-DFFD-BF8D-7582/`.
 4. Rotas antigas e aliases oficiais continuam funcionando.
+

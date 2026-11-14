@@ -1,4 +1,4 @@
----
+﻿---
 name: vanilla-frontend
 description: Regras operacionais de HTML5, CSS3 e JavaScript puro, timeline, formulários e filtros do Projeto #14.
 ---
@@ -12,7 +12,7 @@ description: Regras operacionais de HTML5, CSS3 e JavaScript puro, timeline, for
 - `fetch` relativo com `credentials: 'include'`.
 - Formulário e filtros só visíveis autenticado; logout via `/api/auth/me?logout=1`.
 - Feedback inline (`#auth-feedback`, `#form-feedback`), nunca `alert`.
-- `<footer>` sempre com `F26-2A-F83C-DFFD-8FBD-7582`.
+- `<footer>` sempre com `P26-2A-F83C-DFFD-BF8D-7582`.
 
 ## Contrato de IDs (script.js)
 
@@ -34,3 +34,4 @@ Classes geradas: `.timeline-card`, `.card-header`, `.card-meta`, `.card-date`, `
 - [ ] Light/dark, 360/768/1280px e teclado testados.
 - [ ] `prefers-reduced-motion` respeitado.
 - [ ] Guia completo: `skills/vanilla-frontend/SKILL.md`.
+
