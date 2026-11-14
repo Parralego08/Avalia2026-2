@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 
 import { signSession, verifySession } from '../lib/session.js';
 import { onRequestGet as getMe } from '../functions/api/auth/me.js';
+import { onRequestGet as discordLoginAlias } from '../functions/api/auth/discord.js';
+import { onRequestGet as discordCallbackAlias } from '../functions/api/auth/discord/callback.js';
 import { onRequestGet as getLogs, onRequestPost as postLogs } from '../functions/api/logs.js';
 
 const TEST_SECRET = 'segredo-de-teste-hmac-2026';
@@ -250,4 +252,21 @@ test('GET /api/auth/me valida sessão e limpa cookie no logout', async () => {
   });
   assert.equal(logoutRes.status, 200);
   assert.match(logoutRes.headers.get('Set-Cookie') || '', /Max-Age=0/);
+});
+
+test('aliases oficiais /api/auth/discord encaminham para o fluxo canônico preservando a query', async () => {
+  const loginRes = await discordLoginAlias({
+    request: new Request('https://example.pages.dev/api/auth/discord'),
+  });
+  assert.equal(loginRes.status, 302);
+  assert.equal(loginRes.headers.get('Location'), 'https://example.pages.dev/api/auth/login');
+
+  const callbackRes = await discordCallbackAlias({
+    request: new Request('https://example.pages.dev/api/auth/discord/callback?code=abc&state=xyz'),
+  });
+  assert.equal(callbackRes.status, 302);
+  assert.equal(
+    callbackRes.headers.get('Location'),
+    'https://example.pages.dev/api/auth/callback?code=abc&state=xyz'
+  );
 });

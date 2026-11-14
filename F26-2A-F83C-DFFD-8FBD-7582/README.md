@@ -59,7 +59,9 @@ F26-2A-F83C-DFFD-8FBD-7582/
 │   ├── index.html          # HTML semântico + footer com a Chave Única
 │   ├── style.css           # CSS moderno (variáveis, timeline, responsividade)
 │   └── script.js           # Vanilla JS (IIFE, fetch, DOM direto)
-├── schema.sql              # Schema D1 + índice
+├── migrations/
+│   └── 0001_init.sql       # Schema D1 versionado (Cloudflare migrations)
+├── schema.sql              # Cópia de conveniência do schema D1
 ├── wrangler.toml           # Config Cloudflare Pages + binding D1
 ├── lib/
 │   └── session.js          # Sessão assinada HMAC-SHA256 (Web Crypto)
@@ -68,7 +70,10 @@ F26-2A-F83C-DFFD-8FBD-7582/
 │       ├── auth/
 │       │   ├── login.js    # Inicia OAuth2 Discord (state anti-CSRF)
 │       │   ├── callback.js # Callback OAuth2, valida state e cria sessão
-│       │   └── me.js       # Valida sessão, retorna perfil e logout
+│       │   ├── me.js       # Valida sessão, retorna perfil e logout
+│       │   ├── discord.js  # Alias oficial → /api/auth/login
+│       │   └── discord/
+│       │       └── callback.js # Alias oficial → /api/auth/callback
 │       └── logs.js         # POST/GET de logs com validação e filtros
 ├── tests/
 │   └── api.test.mjs        # Testes automatizados (node:test)
@@ -90,8 +95,14 @@ F26-2A-F83C-DFFD-8FBD-7582/
 ### `GET /api/auth/login`
 Redireciona (302) para `https://discord.com/api/oauth2/authorize` com `state` anti-CSRF.
 
+### `GET /api/auth/discord`
+Alias oficial do modelo do professor: redireciona (302) para `/api/auth/login`.
+
 ### `GET /api/auth/callback`
 Valida `state`, troca o `code` pelo `access_token`, consulta `/users/@me` e cria a sessão assinada. Em erro, redireciona para `/?auth_error=<motivo>`.
+
+### `GET /api/auth/discord/callback`
+Alias oficial do modelo do professor: preserva `code`/`state` e redireciona (302) para `/api/auth/callback`.
 
 ### `GET /api/auth/me`
 **Resposta (200):**

@@ -26,10 +26,12 @@
 - **Harness:** *"Atuas como engenheiro backend serverless. Usa apenas Cloudflare Pages Functions com o binding `env.DB` e queries parametrizadas. Nunca aceites datas vindas do frontend: gera `new Date().toISOString()` no servidor. Autentica exclusivamente via Discord OAuth2 e isola os dados por `user_id`."*
 - **Skill utilizada:** [`skills/cloudflare-backend/SKILL.md`](./skills/cloudflare-backend/SKILL.md)
 - **Entregáveis:**
-  - `schema.sql` — tabela `logs` (`id`, `user_id`, `username`, `avatar`, `conteudo`, `impedimento`, `criado_em`) + índice `idx_logs_user_criado`.
+  - `migrations/0001_init.sql` (espelhado em `schema.sql`) — tabela `logs` (`id`, `user_id`, `username`, `avatar`, `conteudo`, `impedimento`, `criado_em`) + índice `idx_logs_user_criado`.
   - `lib/session.js` — sessão assinada com HMAC-SHA256 (Web Crypto) e expiração, cookie `HttpOnly`/`SameSite=Lax`/`Secure` em HTTPS.
   - `functions/api/auth/login.js` — inicia OAuth2 com `scope=identify` e parâmetro `state` anti-CSRF.
+  - `functions/api/auth/discord.js` — alias oficial que encaminha para `/api/auth/login`.
   - `functions/api/auth/callback.js` — valida `state`, troca `code` por token, consulta `/users/@me` e cria a sessão assinada.
+  - `functions/api/auth/discord/callback.js` — alias oficial que preserva `code`/`state` e encaminha para `/api/auth/callback`.
   - `functions/api/auth/me.js` — valida a sessão, retorna o perfil e implementa logout real (`?logout=1`).
   - `functions/api/logs.js` — `POST` valida payload e gera `criado_em` UTC no servidor; `GET` isola por `user_id` e filtra por `busca`, `impedimento`, `inicio` e `fim`.
 
