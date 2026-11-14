@@ -11,7 +11,7 @@ O projeto foi construído sem frameworks de UI: **HTML5, CSS3 e JavaScript puro*
 ## 🔑 Chave Única e Deploy
 
 - **Chave Única:** `F26-2A-F83C-DFFD-8FBD-7582`
-- **URL_CLOUDFLARE:** `https://diario-bordo-f26.pages.dev` *(substitua pela URL real gerada pela Cloudflare caso o nome do projeto Pages seja diferente)*
+- **URL_CLOUDFLARE:** `https://avalia2026-2-a7z.pages.dev`
 - A chave também está visível no rodapé da aplicação (`<footer>` em `public/index.html`).
 
 > **Observação sobre o prefixo da chave:** a chave oficial emitida para este projeto inicia com `F26-`. O script `validar-local.mjs` do repositório atualmente aceita os prefixos `P26`/`T26`; caso ele recuse o prefixo `F26` ao rodar a validação local, reporte ao professor antes de abrir o Pull Request. Nenhum arquivo fora desta subpasta foi alterado.
@@ -222,7 +222,7 @@ wrangler pages dev
 5. Em **Settings → Environment variables**, adicione:
    - `DISCORD_CLIENT_ID`
    - `DISCORD_CLIENT_SECRET`
-   - `DISCORD_REDIRECT_URI` = `https://<seu-projeto>.pages.dev/api/auth/callback`
+   - `DISCORD_REDIRECT_URI` = `https://avalia2026-2-a7z.pages.dev/api/auth/callback`
    - `SESSION_SECRET` *(recomendado; segredo aleatório forte)*
 6. No [Discord Developer Portal](https://discord.com/developers/applications), cadastre o redirect exato acima em **OAuth2 → Redirects**.
 7. Atualize `URL_CLOUDFLARE` neste README com a URL pública real.
@@ -241,7 +241,7 @@ wrangler pages dev
 
 | Requisito | Status | Evidência |
 |-----------|--------|-----------|
-| **1. Deploy Online no Cloudflare** | ⏳ | URL em `URL_CLOUDFLARE` (validar após o deploy) |
+| **1. Deploy Online no Cloudflare** | ✅ | `https://avalia2026-2-a7z.pages.dev` (Pages + Functions + D1 `DB`) |
 | **2. Serverless (Functions + D1 + Discord OAuth2)** | ✅ | `functions/api/*`, `wrangler.toml` (binding `DB`), `schema.sql`, `lib/session.js` |
 | **3. Frontend HTML5/CSS3/JS Vanilla** | ✅ | `public/index.html`, `public/style.css`, `public/script.js` sem frameworks |
 | **4. Engenharia de Agentes (3 + Teste + Harness + Skills)** | ✅ | `AGENTS.md` + `skills/*/SKILL.md` (3 skills) + `tests/api.test.mjs` |
