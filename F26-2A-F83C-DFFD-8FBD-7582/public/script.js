@@ -256,7 +256,7 @@
 
     async function loadLogs() {
         try {
-            renderEmptyTimeline('A carregar registros...');
+            renderEmptyTimeline('Carregando registros...');
             const { unauthorized, data } = await api.get(buildLogsUrl());
 
             if (unauthorized) {
@@ -312,7 +312,7 @@
         }
 
         elements.submitBtn.disabled = true;
-        elements.submitBtn.textContent = 'A registar...';
+        elements.submitBtn.textContent = 'Registrando...';
         showFeedback(elements.formFeedback, '', '');
 
         try {
@@ -326,7 +326,7 @@
             showFeedback(elements.formFeedback, `Erro ao registrar atividade: ${err.message}`, 'error');
         } finally {
             elements.submitBtn.disabled = false;
-            elements.submitBtn.textContent = 'Registar';
+            elements.submitBtn.textContent = 'Registrar';
         }
     }
 

@@ -58,7 +58,8 @@ F26-2A-F83C-DFFD-8FBD-7582/
 ├── public/
 │   ├── index.html          # HTML semântico + footer com a Chave Única
 │   ├── style.css           # CSS moderno (variáveis, timeline, responsividade)
-│   └── script.js           # Vanilla JS (IIFE, fetch, DOM direto)
+│   ├── script.js           # Vanilla JS (IIFE, fetch, DOM direto)
+│   └── robots.txt          # Indexação e SEO
 ├── migrations/
 │   └── 0001_init.sql       # Schema D1 versionado (Cloudflare migrations)
 ├── schema.sql              # Cópia de conveniência do schema D1
@@ -77,10 +78,11 @@ F26-2A-F83C-DFFD-8FBD-7582/
 │       └── logs.js         # POST/GET de logs com validação e filtros
 ├── tests/
 │   └── api.test.mjs        # Testes automatizados (node:test)
-├── skills/                 # Skills dos agentes (mínimo 3)
+├── skills/                 # Skills dos agentes (4)
 │   ├── cloudflare-backend/SKILL.md
 │   ├── vanilla-frontend/SKILL.md
-│   └── auditoria-qa/SKILL.md
+│   ├── auditoria-qa/SKILL.md
+│   └── design-system/SKILL.md
 ├── .opencode/              # Agentes/skills do harness OpenCode
 ├── .dev.vars.example       # Exemplo de variáveis locais
 ├── AGENTS.md               # Documentação dos agentes e harness
@@ -255,7 +257,8 @@ wrangler pages dev
 | **1. Deploy Online no Cloudflare** | ✅ | `https://avalia2026-2-a7z.pages.dev` (Pages + Functions + D1 `DB`) |
 | **2. Serverless (Functions + D1 + Discord OAuth2)** | ✅ | `functions/api/*`, `wrangler.toml` (binding `DB`), `schema.sql`, `lib/session.js` |
 | **3. Frontend HTML5/CSS3/JS Vanilla** | ✅ | `public/index.html`, `public/style.css`, `public/script.js` sem frameworks |
-| **4. Engenharia de Agentes (3 + Teste + Harness + Skills)** | ✅ | `AGENTS.md` + `skills/*/SKILL.md` (3 skills) + `tests/api.test.mjs` |
+| **3.1 Design System e Acessibilidade** | ✅ | Tokens claro/escuro, foco visível, contraste AA, timeline responsiva, `prefers-reduced-motion` e Lighthouse 100/100/100 |
+| **4. Engenharia de Agentes (4, incluindo Teste + Harness + Skills)** | ✅ | `AGENTS.md` + `skills/*/SKILL.md` (4 skills) + `tests/api.test.mjs` |
 | **5. Repositório, Licença MIT e Auditoria** | ✅ | `LICENSE`, Chave Única no `README.md` e no `<footer>` |
 | **Sem framework UI** | ✅ | Apenas HTML/CSS/JS puro; nenhuma dependência de UI |
 | **Login exclusivo Discord OAuth2** | ✅ | `functions/api/auth/login.js`, `callback.js` e `me.js` |
