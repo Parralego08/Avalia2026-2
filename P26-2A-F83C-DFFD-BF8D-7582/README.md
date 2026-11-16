@@ -1,98 +1,96 @@
-﻿# Projeto #14: DiÃ¡rio de Bordo de Projetos
+﻿# Projeto #14: Diário de Bordo de Projetos
 
-## VisÃ£o Geral
+## Visão Geral
 
-**Avalia2026** Ã© uma aplicaÃ§Ã£o web de linha do tempo para registro diÃ¡rio de atividades de projetos, com autenticaÃ§Ã£o exclusiva via **Discord OAuth2**. Cada usuÃ¡rio registra suas atividades diÃ¡rias, classifica impedimentos tÃ©cnicos e visualiza uma linha do tempo cronolÃ³gica com filtros de busca, impedimento e intervalo de datas.
+**Avalia2026** é uma aplicação web de linha do tempo para registro diário de atividades de projetos, com autenticação exclusiva via **Discord OAuth2**. Cada usuário registra suas atividades diárias, classifica impedimentos técnicos e visualiza uma linha do tempo cronológica com filtros de busca, impedimento e intervalo de datas.
 
-O projeto foi construÃ­do sem frameworks de UI: **HTML5, CSS3 e JavaScript puro** no frontend, **Cloudflare Pages Functions** no backend e **Cloudflare D1 (SQLite)** como banco relacional.
+O projeto foi construído sem frameworks de UI: **HTML5, CSS3 e JavaScript puro** no frontend, **Cloudflare Pages Functions** no backend e **Cloudflare D1 (SQLite)** como banco relacional.
 
 ---
 
-## ðŸ”‘ Chave Ãšnica e Deploy
+## 🔑 Chave Única e Deploy
 
-- **Chave Ãšnica:** `P26-2A-F83C-DFFD-BF8D-7582`
+- **Chave Única:** `P26-2A-F83C-DFFD-BF8D-7582`
 - **URL_CLOUDFLARE:** `https://avalia2026-2-a7z.pages.dev`
-- A chave tambÃ©m estÃ¡ visÃ­vel no rodapÃ© da aplicaÃ§Ã£o (`<footer>` em `public/index.html`).
-
-> **ObservaÃ§Ã£o sobre o prefixo da chave:** a chave oficial emitida para este projeto inicia com `F26-`. O script `validar-local.mjs` do repositÃ³rio atualmente aceita os prefixos `P26`/`T26`; caso ele recuse o prefixo `F26` ao rodar a validaÃ§Ã£o local, reporte ao professor antes de abrir o Pull Request. Nenhum arquivo fora desta subpasta foi alterado.
+- A chave também está visível no rodapé da aplicação (`<footer>` em `public/index.html`).
 
 ---
 
-## âš™ï¸ Funcionalidades
+## ⚡ Funcionalidades
 
-1. **Login exclusivo via Discord OAuth2** (`identify`), com parÃ¢metro `state` anti-CSRF e sessÃ£o em cookie assinado.
-2. **Registro de atividades** com conteÃºdo textual (atÃ© 2000 caracteres) e classificaÃ§Ã£o de impedimento (`sem`, `atencao`, `bloqueado`).
-3. **Timestamp UTC gerado exclusivamente no servidor** â€” o cliente nunca envia datas.
+1. **Login exclusivo via Discord OAuth2** (`identify`), com parâmetro `state` anti-CSRF e sessão em cookie assinado.
+2. **Registro de atividades** com conteúdo textual (até 2000 caracteres) e classificação de impedimento (`sem`, `atencao`, `bloqueado`).
+3. **Timestamp UTC gerado exclusivamente no servidor** — o cliente nunca envia datas.
 4. **Linha do tempo vertical** em CSS puro, ordenada da mais recente para a mais antiga, com marcadores coloridos por impedimento.
 5. **Filtros no backend** por palavra-chave (`busca`), `impedimento`, `inicio` e `fim` (intervalo inclusivo).
-6. **Privacidade:** cada usuÃ¡rio visualiza apenas os prÃ³prios registros (filtro obrigatÃ³rio por `user_id` no servidor).
-7. **Logout real** sem sair da aplicaÃ§Ã£o, com limpeza do cookie de sessÃ£o.
+6. **Privacidade:** cada usuário visualiza apenas os próprios registros (filtro obrigatório por `user_id` no servidor).
+7. **Logout real** sem sair da aplicação, com limpeza do cookie de sessão.
 
 ---
 
-## ðŸ—ï¸ Arquitetura
+## 🏗️ Arquitetura
 
-### Stack TecnolÃ³gica
+### Stack Tecnológica
 
 | Camada | Tecnologia |
 |--------|------------|
-| **Frontend** | HTML5, CSS3, JavaScript (Vanilla/ES6+) â€” **sem frameworks UI** |
+| **Frontend** | HTML5, CSS3, JavaScript (Vanilla/ES6+) — **sem frameworks UI** |
 | **Backend** | Cloudflare Pages Functions (Workers runtime) |
 | **Banco de Dados** | Cloudflare D1 (SQLite) |
-| **AutenticaÃ§Ã£o** | Discord OAuth2 (exclusivo) |
+| **Autenticação** | Discord OAuth2 (exclusivo) |
 | **Deploy** | Cloudflare Pages |
 
-### SeguranÃ§a e Integridade
+### Segurança e Integridade
 
-- **SessÃ£o assinada com HMAC-SHA256** via Web Crypto API (`lib/session.js`), contendo `user_id`, `username`, `avatar`, `iat` e `exp`. Cookies nÃ£o podem ser forjados ou adulterados pelo cliente.
-- **Cookie `HttpOnly`, `SameSite=Lax` e `Secure` em HTTPS**, com expiraÃ§Ã£o de 24 horas.
-- **ProteÃ§Ã£o CSRF no OAuth2** com `state` aleatÃ³rio armazenado em cookie de curta duraÃ§Ã£o e validado no callback.
+- **Sessão assinada com HMAC-SHA256** via Web Crypto API (`lib/session.js`), contendo `user_id`, `username`, `avatar`, `iat` e `exp`. Cookies não podem ser forjados ou adulterados pelo cliente.
+- **Cookie `HttpOnly`, `SameSite=Lax` e `Secure` em HTTPS**, com expiração de 24 horas.
+- **Proteção CSRF no OAuth2** com `state` aleatório armazenado em cookie de curta duração e validado no callback.
 - **Queries parametrizadas** no D1 (`.prepare().bind()`), prevenindo SQL Injection.
-- **ValidaÃ§Ã£o no servidor** de `conteudo` (obrigatÃ³rio, nÃ£o vazio, limite de 2000 caracteres) e `impedimento` (enumeraÃ§Ã£o fechada).
+- **Validação no servidor** de `conteudo` (obrigatório, não vazio, limite de 2000 caracteres) e `impedimento` (enumeração fechada).
 - **Isolamento de dados** por `user_id` em todas as leituras.
 
 ### Estrutura de Ficheiros
 
 ```
 P26-2A-F83C-DFFD-BF8D-7582/
-â”œâ”€â”€ public/
-â”‚   â”œâ”€â”€ index.html          # HTML semÃ¢ntico + footer com a Chave Ãšnica
-â”‚   â”œâ”€â”€ style.css           # CSS moderno (variÃ¡veis, timeline, responsividade)
-â”‚   â”œâ”€â”€ script.js           # Vanilla JS (IIFE, fetch, DOM direto)
-â”‚   â””â”€â”€ robots.txt          # IndexaÃ§Ã£o e SEO
-â”œâ”€â”€ migrations/
-â”‚   â””â”€â”€ 0001_init.sql       # Schema D1 versionado (Cloudflare migrations)
-â”œâ”€â”€ schema.sql              # CÃ³pia de conveniÃªncia do schema D1
-â”œâ”€â”€ wrangler.toml           # Config Cloudflare Pages + binding D1
-â”œâ”€â”€ lib/
-â”‚   â””â”€â”€ session.js          # SessÃ£o assinada HMAC-SHA256 (Web Crypto)
-â”œâ”€â”€ functions/
-â”‚   â””â”€â”€ api/
-â”‚       â”œâ”€â”€ auth/
-â”‚       â”‚   â”œâ”€â”€ login.js    # Inicia OAuth2 Discord (state anti-CSRF)
-â”‚       â”‚   â”œâ”€â”€ callback.js # Callback OAuth2, valida state e cria sessÃ£o
-â”‚       â”‚   â”œâ”€â”€ me.js       # Valida sessÃ£o, retorna perfil e logout
-â”‚       â”‚   â”œâ”€â”€ discord.js  # Alias oficial â†’ /api/auth/login
-â”‚       â”‚   â””â”€â”€ discord/
-â”‚       â”‚       â””â”€â”€ callback.js # Alias oficial â†’ /api/auth/callback
-â”‚       â””â”€â”€ logs.js         # POST/GET de logs com validaÃ§Ã£o e filtros
-â”œâ”€â”€ tests/
-â”‚   â””â”€â”€ api.test.mjs        # Testes automatizados (node:test)
-â”œâ”€â”€ skills/                 # Skills dos agentes (4)
-â”‚   â”œâ”€â”€ cloudflare-backend/SKILL.md
-â”‚   â”œâ”€â”€ vanilla-frontend/SKILL.md
-â”‚   â”œâ”€â”€ auditoria-qa/SKILL.md
-â”‚   â””â”€â”€ design-system/SKILL.md
-â”œâ”€â”€ .opencode/              # Agentes/skills do harness OpenCode
-â”œâ”€â”€ .dev.vars.example       # Exemplo de variÃ¡veis locais
-â”œâ”€â”€ AGENTS.md               # DocumentaÃ§Ã£o dos agentes e harness
-â”œâ”€â”€ LICENSE                 # MIT License
-â””â”€â”€ README.md               # Este ficheiro
+├── public/
+│   ├── index.html          # HTML semântico + footer com a Chave Única
+│   ├── style.css           # CSS moderno (variáveis, timeline, responsividade)
+│   ├── script.js           # Vanilla JS (IIFE, fetch, DOM direto)
+│   └── robots.txt          # Indexação e SEO
+├── migrations/
+│   └── 0001_init.sql       # Schema D1 versionado (Cloudflare migrations)
+├── schema.sql              # Cópia de conveniência do schema D1
+├── wrangler.toml           # Config Cloudflare Pages + binding D1
+├── lib/
+│   └── session.js          # Sessão assinada HMAC-SHA256 (Web Crypto)
+├── functions/
+│   └── api/
+│       ├── auth/
+│       │   ├── login.js    # Inicia OAuth2 Discord (state anti-CSRF)
+│       │   ├── callback.js # Callback OAuth2, valida state e cria sessão
+│       │   ├── me.js       # Valida sessão, retorna perfil e logout
+│       │   ├── discord.js  # Alias oficial → /api/auth/login
+│       │   └── discord/
+│       │       └── callback.js # Alias oficial → /api/auth/callback
+│       └── logs.js         # POST/GET de logs com validação e filtros
+├── tests/
+│   └── api.test.mjs        # Testes automatizados (node:test)
+├── skills/                 # Skills dos agentes (4)
+│   ├── cloudflare-backend/SKILL.md
+│   ├── vanilla-frontend/SKILL.md
+│   ├── auditoria-qa/SKILL.md
+│   └── design-system/SKILL.md
+├── .opencode/              # Agentes/skills do harness OpenCode
+├── .dev.vars.example       # Exemplo de variáveis locais
+├── AGENTS.md               # Documentação dos agentes e harness
+├── LICENSE                 # MIT License
+└── README.md               # Este ficheiro
 ```
 
 ---
 
-## ðŸ”Œ Contrato da API
+## 🌐 Contrato da API
 
 ### `GET /api/auth/login`
 Redireciona (302) para `https://discord.com/api/oauth2/authorize` com `state` anti-CSRF.
@@ -101,7 +99,7 @@ Redireciona (302) para `https://discord.com/api/oauth2/authorize` com `state` an
 Alias oficial do modelo do professor: redireciona (302) para `/api/auth/login`.
 
 ### `GET /api/auth/callback`
-Valida `state`, troca o `code` pelo `access_token`, consulta `/users/@me` e cria a sessÃ£o assinada. Em erro, redireciona para `/?auth_error=<motivo>`.
+Valida `state`, troca o `code` pelo `access_token`, consulta `/users/@me` e cria a sessão assinada. Em erro, redireciona para `/?auth_error=<motivo>`.
 
 ### `GET /api/auth/discord/callback`
 Alias oficial do modelo do professor: preserva `code`/`state` e redireciona (302) para `/api/auth/callback`.
@@ -115,21 +113,21 @@ Alias oficial do modelo do professor: preserva `code`/`state` e redireciona (302
   "avatar": "a_abc123hash"
 }
 ```
-Sem sessÃ£o vÃ¡lida: **401**. Com `?logout=1`: limpa o cookie (`Max-Age=0`).
+Sem sessão válida: **401**. Com `?logout=1`: limpa o cookie (`Max-Age=0`).
 
 ### `POST /api/logs`
 **Body:**
 ```json
-{ "conteudo": "Implementei a assinatura HMAC da sessÃ£o", "impedimento": "sem" }
+{ "conteudo": "Implementei a assinatura HMAC da sessão", "impedimento": "sem" }
 ```
 **Resposta (201):**
 ```json
 { "success": true, "id": 42, "criado_em": "2026-11-14T14:30:00.000Z" }
 ```
-Erros: **400** (payload invÃ¡lido), **401** (sem sessÃ£o), **503** (D1 nÃ£o configurado).
+Erros: **400** (payload inválido), **401** (sem sessão), **503** (D1 não configurado).
 
 ### `GET /api/logs`
-**Query params opcionais:** `busca`, `impedimento`, `inicio` (`YYYY-MM-DD`), `fim` (`YYYY-MM-DD` â€” inclusivo atÃ© `23:59:59.999Z`).
+**Query params opcionais:** `busca`, `impedimento`, `inicio` (`YYYY-MM-DD`), `fim` (`YYYY-MM-DD` — inclusivo até `23:59:59.999Z`).
 
 **Resposta (200):**
 ```json
@@ -139,7 +137,7 @@ Erros: **400** (payload invÃ¡lido), **401** (sem sessÃ£o), **503** (D1 nÃ£
     "user_id": "123456789012345678",
     "username": "usuario_discord",
     "avatar": "a_abc123hash",
-    "conteudo": "Implementei a assinatura HMAC da sessÃ£o",
+    "conteudo": "Implementei a assinatura HMAC da sessão",
     "impedimento": "sem",
     "criado_em": "2026-11-14T14:30:00.000Z"
   }
@@ -151,7 +149,7 @@ Erros: **400** (payload invÃ¡lido), **401** (sem sessÃ£o), **503** (D1 nÃ£
 
 ---
 
-## ðŸ—„ï¸ Banco de Dados
+## 🗃️ Banco de Dados
 
 ```sql
 CREATE TABLE IF NOT EXISTS logs (
@@ -169,28 +167,28 @@ CREATE INDEX IF NOT EXISTS idx_logs_user_criado ON logs(user_id, criado_em DESC)
 
 ---
 
-## ðŸ§ª Testes Automatizados
+## 🧪 Testes Automatizados
 
-A suÃ­te usa apenas mÃ³dulos nativos (`node:test` + `node:assert`), sem dependÃªncias externas:
+A suíte usa apenas módulos nativos (`node:test` + `node:assert`), sem dependências externas:
 
 ```bash
 node --test tests/api.test.mjs
 ```
 
 Cobertura:
-- rejeiÃ§Ã£o de cookie de sessÃ£o adulterado/segredo incorreto;
-- `401` sem sessÃ£o em `GET`/`POST /api/logs`;
-- validaÃ§Ã£o de `conteudo` vazio e `impedimento` invÃ¡lido;
+- rejeição de cookie de sessão adulterado/segredo incorreto;
+- `401` sem sessão em `GET`/`POST /api/logs`;
+- validação de `conteudo` vazio e `impedimento` inválido;
 - timestamp UTC gerado no servidor (ignora `criado_em` do cliente);
 - isolamento por `user_id`, busca textual e intervalo de datas inclusivo;
-- validaÃ§Ã£o de sessÃ£o e logout em `/api/auth/me`.
+- validação de sessão e logout em `/api/auth/me`.
 
 ---
 
-## ðŸ’» Como Executar Localmente
+## 💻 Como Executar Localmente
 
 ```bash
-# PrÃ©-requisitos: Node.js >= 18, wrangler CLI, conta Cloudflare com D1
+# Pré-requisitos: Node.js >= 18, wrangler CLI, conta Cloudflare com D1
 npm install -g wrangler
 wrangler login
 
@@ -201,27 +199,27 @@ wrangler d1 create diario-bordo-db
 # Aplicar schema
 wrangler d1 execute diario-bordo-db --local --file=schema.sql
 
-# Configurar variÃ¡veis (Discord OAuth2)
+# Configurar variáveis (Discord OAuth2)
 # Copiar .dev.vars.example para .dev.vars e preencher:
 # DISCORD_CLIENT_ID=...
 # DISCORD_CLIENT_SECRET=...
 # DISCORD_REDIRECT_URI=http://localhost:8788/api/auth/callback
-# SESSION_SECRET=... (opcional; padrÃ£o usa DISCORD_CLIENT_SECRET)
+# SESSION_SECRET=... (opcional; padrão usa DISCORD_CLIENT_SECRET)
 
 # Iniciar dev server
 wrangler pages dev
 ```
 
-> **Dica para o laboratÃ³rio (Windows + Scoop):** use `npx.cmd wrangler ...` para evitar bloqueio de scripts `.ps1` do PowerShell.
+> **Dica para o laboratório (Windows + Scoop):** use `npx.cmd wrangler ...` para evitar bloqueio de scripts `.ps1` do PowerShell.
 
 ---
 
-## ðŸš€ Deploy (Cloudflare Pages + D1 + Discord)
+## 🚀 Deploy (Cloudflare Pages + D1 + Discord)
 
-1. Em **Workers & Pages â†’ Create â†’ Pages â†’ Connect to Git**, selecione o fork do repositÃ³rio `Avalia2026-2`.
+1. Em **Workers & Pages → Create → Pages → Connect to Git**, selecione o fork do repositório `Avalia2026-2`.
 2. Configure:
    - **Root directory:** `P26-2A-F83C-DFFD-BF8D-7582`
-   - **Build command:** *(em branco â€” HTML/CSS/JS puro)*
+   - **Build command:** *(em branco — HTML/CSS/JS puro)*
    - **Build output directory:** `public`
 3. Crie o banco D1 e aplique o schema remoto:
    ```bash
@@ -229,19 +227,19 @@ wrangler pages dev
    npx.cmd wrangler d1 create diario-bordo-db
    npx.cmd wrangler d1 execute diario-bordo-db --remote --file=schema.sql
    ```
-4. No painel do Pages â†’ **Settings â†’ Functions â†’ D1 database bindings**, adicione:
+4. No painel do Pages → **Settings → Functions → D1 database bindings**, adicione:
    - **Variable name:** `DB`
    - **D1 database:** `diario-bordo-db`
-5. Em **Settings â†’ Environment variables**, adicione:
+5. Em **Settings → Environment variables**, adicione:
    - `DISCORD_CLIENT_ID`
    - `DISCORD_CLIENT_SECRET`
    - `DISCORD_REDIRECT_URI` = `https://avalia2026-2-a7z.pages.dev/api/auth/callback`
-   - `SESSION_SECRET` *(recomendado; segredo aleatÃ³rio forte)*
-6. No [Discord Developer Portal](https://discord.com/developers/applications), cadastre o redirect exato acima em **OAuth2 â†’ Redirects**.
-7. Atualize `URL_CLOUDFLARE` neste README com a URL pÃºblica real.
+   - `SESSION_SECRET` *(recomendado; segredo aleatório forte)*
+6. No [Discord Developer Portal](https://discord.com/developers/applications), cadastre o redirect exato acima em **OAuth2 → Redirects**.
+7. Atualize `URL_CLOUDFLARE` neste README com a URL pública real.
 8. Valide localmente e envie:
    ```bash
-   node validar-local.mjs P26-2A-F83C-DFFD-BF8D-7582
+   node ../../validar-local.mjs P26-2A-F83C-DFFD-BF8D-7582
    node --test P26-2A-F83C-DFFD-BF8D-7582/tests/api.test.mjs
    git add P26-2A-F83C-DFFD-BF8D-7582
    git commit -m "Entrega P26-2A-F83C-DFFD-BF8D-7582"
@@ -250,29 +248,28 @@ wrangler pages dev
 
 ---
 
-## âœ… Conformidade com a Rubrica
+## ✅ Conformidade com a Rúbrica
 
-| Requisito | Status | EvidÃªncia |
+| Requisito | Status | Evidência |
 |-----------|--------|-----------|
-| **1. Deploy Online no Cloudflare** | âœ… | `https://avalia2026-2-a7z.pages.dev` (Pages + Functions + D1 `DB`) |
-| **2. Serverless (Functions + D1 + Discord OAuth2)** | âœ… | `functions/api/*`, `wrangler.toml` (binding `DB`), `schema.sql`, `lib/session.js` |
-| **3. Frontend HTML5/CSS3/JS Vanilla** | âœ… | `public/index.html`, `public/style.css`, `public/script.js` sem frameworks |
-| **3.1 Design System e Acessibilidade** | âœ… | Tokens claro/escuro, foco visÃ­vel, contraste AA, timeline responsiva, `prefers-reduced-motion` e Lighthouse 100/100/100 |
-| **4. Engenharia de Agentes (4, incluindo Teste + Harness + Skills)** | âœ… | `AGENTS.md` + `skills/*/SKILL.md` (4 skills) + `tests/api.test.mjs` |
-| **5. RepositÃ³rio, LicenÃ§a MIT e Auditoria** | âœ… | `LICENSE`, Chave Ãšnica no `README.md` e no `<footer>` |
-| **Sem framework UI** | âœ… | Apenas HTML/CSS/JS puro; nenhuma dependÃªncia de UI |
-| **Login exclusivo Discord OAuth2** | âœ… | `functions/api/auth/login.js`, `callback.js` e `me.js` |
-| **`new Date().toISOString()` sÃ³ no servidor (UTC)** | âœ… | `functions/api/logs.js` â€” frontend apenas formata datas |
-| **Footer com a chave `P26-2A-F83C-DFFD-BF8D-7582`** | âœ… | `public/index.html` |
-| **Campos `user_id`, `username`, `avatar`, `conteudo`, `impedimento`, `criado_em`** | âœ… | API, schema e `public/script.js` alinhados |
+| **1. Deploy Online no Cloudflare** | ✅ | `https://avalia2026-2-a7z.pages.dev` (Pages + Functions + D1 `DB`) |
+| **2. Serverless (Functions + D1 + Discord OAuth2)** | ✅ | `functions/api/*`, `wrangler.toml` (binding `DB`), `schema.sql`, `lib/session.js` |
+| **3. Frontend HTML5/CSS3/JS Vanilla** | ✅ | `public/index.html`, `public/style.css`, `public/script.js` sem frameworks |
+| **3.1 Design System e Acessibilidade** | ✅ | Tokens claro/escuro, foco visível, contraste AA, timeline responsiva, `prefers-reduced-motion` e Lighthouse 100/100/100 |
+| **4. Engenharia de Agentes (Mín. 3 Agentes + 1 de Teste/Validação + Harness + Skills)** | ✅ | `AGENTS.md` + `skills/*/SKILL.md` (4 skills) + `tests/api.test.mjs` |
+| **5. Repositório, Licença MIT e Auditoria** | ✅ | `LICENSE`, Chave Única no `README.md` e no `<footer>` |
+| **Sem framework UI** | ✅ | Apenas HTML/CSS/JS puro; nenhuma dependência de UI |
+| **Login exclusivo Discord OAuth2** | ✅ | `functions/api/auth/login.js`, `callback.js` e `me.js` |
+| **`new Date().toISOString()` só no servidor (UTC)** | ✅ | `functions/api/logs.js` — frontend apenas formata datas |
+| **Footer com a chave `P26-2A-F83C-DFFD-BF8D-7582`** | ✅ | `public/index.html` |
+| **Campos `user_id`, `username`, `avatar`, `conteudo`, `impedimento`, `criado_em`** | ✅ | API, schema e `public/script.js` alinhados |
 
 ---
 
-## ðŸ“„ LicenÃ§a
+## 📄 Licença
 
-MIT License â€” ver ficheiro [`LICENSE`](./LICENSE).
+MIT License — ver arquivo [`LICENSE`](./LICENSE).
 
 ---
 
-**Chave Ãšnica:** `P26-2A-F83C-DFFD-BF8D-7582`
-
+**Chave Única:** `P26-2A-F83C-DFFD-BF8D-7582`
